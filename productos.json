@@ -1,0 +1,37 @@
+[
+  {
+    "id": 1,
+    "nombre": "Base de maquillaje",
+    "marca": "Maybelline",
+    "precio": 12000,
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "nombre": "Labial rojo",
+    "marca": "MAC",
+    "precio": 15000,
+    "stock": 5
+  },
+  {
+    "id": 3,
+    "nombre": "Máscara de pestañas",
+    "marca": "Rimmel",
+    "precio": 8000,
+    "stock": 12
+  },
+  {
+    "id": 4,
+    "nombre": "MÁSCARA de pestañas Waterproof",
+    "marca": "L'Oréal",
+    "precio": 9500,
+    "stock": 20
+  },
+  {
+    "id": 5,
+    "nombre": "Paleta de Sombras Nude",
+    "marca": "Rimmel",
+    "precio": 15000,
+    "stock": 5
+  }
+]

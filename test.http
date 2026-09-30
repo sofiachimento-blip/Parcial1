@@ -1,0 +1,11 @@
+### 1. Ver todos los productos
+GET http://localhost:3000/api/productos
+
+### 2. Ver producto con ID 1
+GET http://localhost:3000/api/productos/1
+
+### 3. Ver error si pongo id que no existe
+GET http://localhost:3000/api/productos/99
+
+### 4. Probar el procedimiento y guardar en logs.json
+GET http://localhost:3000/procedimiento/calcular-total
