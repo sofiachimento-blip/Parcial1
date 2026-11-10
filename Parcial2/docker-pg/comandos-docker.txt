@@ -1,0 +1,20 @@
+/// OPCION A: solo la base de datos (la app corre en tu compu con pnpm dev)
+docker compose up -d db
+
+/// OPCION B: base de datos + app, todo en Docker
+docker compose up -d --build
+
+/// Ver logs de la app
+docker compose logs -f app
+
+/// Entrar a la base desde la terminal
+docker exec -it contenedor_tienda psql -U root -d tienda
+tienda=# SELECT * FROM usuarios;
+tienda=# SELECT * FROM productos;
+tienda=# SELECT * FROM logs;
+
+/// Apagar
+docker compose down
+
+/// Apagar y BORRAR los datos (para volver a ejecutar sql/tienda.sql desde cero)
+docker compose down -v

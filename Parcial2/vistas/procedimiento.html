@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedimiento</title>
+    <link rel="stylesheet" href="/publico/css/estilos.css" />
+</head>
+<body>
+    <header id="menu"></header>
+    <main>
+        <h1>Procedimiento</h1>
+        <div class="tarjeta centrado">
+            <p>Este procedimiento recorre todos los productos de la tienda y calcula,
+            por cada uno, <em>precio × stock</em>. Luego suma esos valores para informar
+            cuánto dinero hay acumulado en el inventario y cuántas unidades hay en total.
+            Cada ejecución exitosa queda registrada en la tabla de logs.</p>
+            <button id="ejecutar">Ejecutar procedimiento</button>
+        </div>
+        <div id="salida"></div>
+    </main>
+    <script src="/publico/js/menu.js"></script>
+    <script type="module" src="/publico/js/procedimiento.js"></script>
+</body>
+</html>

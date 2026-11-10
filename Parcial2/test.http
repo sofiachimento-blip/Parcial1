@@ -1,0 +1,20 @@
+### 1. Login (guarda la cookie con el token)
+POST http://localhost:3000/autenticacion
+Content-Type: application/x-www-form-urlencoded
+
+usuario=admin&pass=admin123
+
+### 2. Ver todos los productos (requiere cookie / sino 401)
+GET http://localhost:3000/api/productos
+
+### 3. Ver producto con ID 1
+GET http://localhost:3000/api/productos/1
+
+### 4. Producto inexistente (404)
+GET http://localhost:3000/api/productos/99
+
+### 5. Procedimiento (guarda en la tabla logs)
+GET http://localhost:3000/procedimiento/calcular-total
+
+### 6. Cerrar sesion
+GET http://localhost:3000/cerrar-sesion

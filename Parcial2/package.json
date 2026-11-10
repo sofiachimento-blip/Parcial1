@@ -1,0 +1,22 @@
+{
+  "name": "Parcial2",
+  "version": "2.0.0",
+  "description": "Tienda de maquillaje - API REST + interfaz web con login (cookies + JWT)",
+  "main": "index.mjs",
+  "scripts": {
+    "dev": "node --watch index.mjs",
+    "start": "node index.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
+    "dotenv": "^16.5.0",
+    "express": "5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1"
+  }
+}
