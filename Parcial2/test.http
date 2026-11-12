@@ -1,0 +1,32 @@
+### 1. Sin sesión: la API debe responder 401
+GET http://localhost:3000/api/productos
+
+### 2. Login (guarda la cookie "token"; responde 302 a /items)
+POST http://localhost:3000/autenticacion
+Content-Type: application/x-www-form-urlencoded
+
+usuario=admin&pass=admin123
+
+### 3. Login con clave incorrecta (302 a /login?error=credenciales)
+POST http://localhost:3000/autenticacion
+Content-Type: application/x-www-form-urlencoded
+
+usuario=admin&pass=incorrecta
+
+### 4. Ver todos los productos (requiere la cookie del paso 2)
+GET http://localhost:3000/api/productos
+
+### 5. Ver producto con ID 1
+GET http://localhost:3000/api/productos/1
+
+### 6. ID inexistente (404)
+GET http://localhost:3000/api/productos/99
+
+### 7. ID inválido (400)
+GET http://localhost:3000/api/productos/abc
+
+### 8. Procedimiento (guarda un registro en la tabla logs)
+POST http://localhost:3000/api/procedimiento/calcular-total
+
+### 9. Cerrar sesión (borra la cookie)
+GET http://localhost:3000/cerrar-sesion

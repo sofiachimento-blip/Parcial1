@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ítems - Glam Store</title>
+    <link rel="stylesheet" href="/assets/estilos.css" />
+</head>
+<body data-pagina="items">
+    <header id="menu"></header>
+    <main>
+        <h1>Productos de maquillaje</h1>
+        <div id="mensaje" class="mensaje" hidden></div>
+        <section id="listado" class="grilla"></section>
+    </main>
+    <script type="module" src="/assets/menu.js"></script>
+    <script type="module">
+        import { consultarApi, formatearPesos } from '/assets/api.js';
+
+        const listado = document.getElementById('listado');
+        const mensaje = document.getElementById('mensaje');
+
+        try {
+            const { ok, datos } = await consultarApi('/api/productos');
+            if (!ok) throw new Error(datos.mensaje);
+
+            // Por cada producto se arma una tarjeta con un enlace a /item?id=<id> (query string).
+            // Se usa textContent (no innerHTML) para que los datos nunca se interpreten como HTML.
+            for (const producto of datos.resultado) {
+                const tarjeta = document.createElement('article');
+                tarjeta.className = 'tarjeta';
+
+                const titulo = document.createElement('h2');
+                titulo.textContent = producto.nombre;
+                const marca = document.createElement('p');
+                marca.className = 'marca-producto';
+                marca.textContent = producto.marca;
+                const precio = document.createElement('p');
+                precio.className = 'precio';
+                precio.textContent = formatearPesos(producto.precio);
+                const enlace = document.createElement('a');
+                enlace.className = 'boton';
+                enlace.href = `/item?id=${producto.id}`;
+                enlace.textContent = 'Ver detalle';
+
+                tarjeta.append(titulo, marca, precio, enlace);
+                listado.append(tarjeta);
+            }
+        } catch (error) {
+            mensaje.textContent = `No se pudieron cargar los productos: ${error.message}`;
+            mensaje.className = 'mensaje error';
+            mensaje.hidden = false;
+        }
+    </script>
+</body>
+</html>

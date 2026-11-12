@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Procedimiento - Glam Store</title>
+    <link rel="stylesheet" href="/assets/estilos.css" />
+</head>
+<body data-pagina="procedimiento">
+    <header id="menu"></header>
+    <main>
+        <h1>Procedimiento: valor del inventario</h1>
+        <section class="tarjeta">
+            <p>
+                Este procedimiento recorre todos los productos de maquillaje de la tienda y calcula
+                (1) el total de unidades en stock y (2) el dinero total acumulado en inventario,
+                sumando <strong>precio × stock</strong> de cada producto. Cada ejecución queda
+                registrada en la tabla de logs junto con el usuario que la realizó.
+            </p>
+            <button id="ejecutar">Ejecutar procedimiento</button>
+        </section>
+
+        <div id="mensaje" class="mensaje" hidden></div>
+        <section id="resultado" class="tarjeta resultado" hidden>
+            <dl>
+                <dt>Proceso</dt><dd id="proceso"></dd>
+                <dt>Unidades en stock</dt><dd id="items"></dd>
+                <dt>Dinero total acumulado</dt><dd id="dinero"></dd>
+            </dl>
+        </section>
+    </main>
+    <script type="module" src="/assets/menu.js"></script>
+    <script type="module">
+        import { consultarApi, formatearPesos } from '/assets/api.js';
+
+        const boton = document.getElementById('ejecutar');
+        const mensaje = document.getElementById('mensaje');
+        const resultado = document.getElementById('resultado');
+
+        const mostrarMensaje = (texto, tipo) => {
+            mensaje.textContent = texto;
+            mensaje.className = `mensaje ${tipo}`;
+            mensaje.hidden = false;
+        };
+
+        boton.addEventListener('click', async () => {
+            boton.disabled = true; // evita ejecuciones dobles mientras espera la respuesta
+            mensaje.hidden = true;
+            resultado.hidden = true;
+
+            try {
+                const { ok, datos } = await consultarApi('/api/procedimiento/calcular-total', { method: 'POST' });
+                if (!ok) throw new Error(datos.mensaje);
+
+                document.getElementById('proceso').textContent = datos.proceso;
+                document.getElementById('items').textContent = datos.resultado.totalItemsEnStock;
+                document.getElementById('dinero').textContent = formatearPesos(datos.resultado.dineroTotalAcumulado);
+                resultado.hidden = false;
+                mostrarMensaje('✔ El procedimiento se ejecutó con éxito.', 'ok');
+            } catch (error) {
+                mostrarMensaje(`✖ El procedimiento falló: ${error.message}`, 'error');
+            } finally {
+                boton.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>

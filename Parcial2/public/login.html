@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Glam Store</title>
+    <link rel="stylesheet" href="/assets/estilos.css" />
+</head>
+<body data-pagina="login">
+    <header id="menu"></header>
+    <main class="login">
+        <div class="tarjeta">
+            <h1>Iniciar sesión</h1>
+            <p>Ingresá para gestionar el inventario de maquillaje.</p>
+            <div id="error" class="mensaje error" hidden></div>
+            <form action="/autenticacion" method="post">
+                <label>Usuario
+                    <input type="text" name="usuario" required autofocus />
+                </label>
+                <label>Contraseña
+                    <input type="password" name="pass" required />
+                </label>
+                <button type="submit">Ingresar</button>
+            </form>
+        </div>
+    </main>
+    <script type="module" src="/assets/menu.js"></script>
+    <script type="module">
+        // El servidor redirige a /login?error=... cuando falla la autenticación.
+        const mensajes = {
+            datos: 'Completá usuario y contraseña.',
+            credenciales: 'Usuario o contraseña incorrectos.',
+            servidor: 'Error del servidor. Intentá nuevamente.',
+        };
+        const codigo = new URLSearchParams(window.location.search).get('error');
+        if (codigo) {
+            const caja = document.getElementById('error');
+            caja.textContent = mensajes[codigo] ?? 'No se pudo iniciar sesión.';
+            caja.hidden = false;
+        }
+    </script>
+</body>
+</html>

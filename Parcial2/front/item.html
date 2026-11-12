@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ítem - Glam Store</title>
+    <link rel="stylesheet" href="/assets/estilos.css" />
+</head>
+<body data-pagina="item">
+    <header id="menu"></header>
+    <main>
+        <h1>Detalle del producto</h1>
+        <div id="mensaje" class="mensaje" hidden></div>
+        <article id="detalle" class="tarjeta resultado" hidden>
+            <dl>
+                <dt>Nombre</dt><dd id="nombre"></dd>
+                <dt>Marca</dt><dd id="marca"></dd>
+                <dt>Precio</dt><dd id="precio"></dd>
+                <dt>Stock</dt><dd id="stock"></dd>
+            </dl>
+        </article>
+        <p><a class="boton" href="/items">← Volver a los productos</a></p>
+    </main>
+    <script type="module" src="/assets/menu.js"></script>
+    <script type="module">
+        import { consultarApi, formatearPesos } from '/assets/api.js';
+
+        const mensaje = document.getElementById('mensaje');
+
+        // Se lee el id de la query string (/item?id=3) y se arma el endpoint /api/productos/3.
+        const id = new URLSearchParams(window.location.search).get('id');
+
+        try {
+            if (!id) throw new Error('Falta el parámetro id en la URL');
+
+            const { ok, datos } = await consultarApi(`/api/productos/${encodeURIComponent(id)}`);
+            if (!ok) throw new Error(datos.mensaje); // 400 / 404 vienen con su mensaje
+
+            const producto = datos.resultado;
+            document.getElementById('nombre').textContent = producto.nombre;
+            document.getElementById('marca').textContent = producto.marca;
+            document.getElementById('precio').textContent = formatearPesos(producto.precio);
+            document.getElementById('stock').textContent = `${producto.stock} unidades`;
+            document.getElementById('detalle').hidden = false;
+        } catch (error) {
+            mensaje.textContent = error.message;
+            mensaje.className = 'mensaje error';
+            mensaje.hidden = false;
+        }
+    </script>
+</body>
+</html>
